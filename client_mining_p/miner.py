@@ -4,8 +4,9 @@ import requests
 import sys
 import json
 
+# remove the self as no longer in class
+def proof_of_work(self, block):
 
-def proof_of_work(block):
     """
     Simple Proof of Work Algorithm
     Stringify the block and look for a proof.
@@ -13,12 +14,18 @@ def proof_of_work(block):
     in an effort to find a number that is a valid proof
     :return: A valid proof for the provided block
     """
-    pass
+    block_string = json.dumps(block, sort_keys=True)
+    proof = 0
+    # loop while the return from a call to valid proof is False
+    while self.valid_proof(block_string, proof) is False:
+        proof += 1        
+    # return proof
+    return proof
 
-
+@staticmethod
 def valid_proof(block_string, proof):
     """
-    Validates the Proof:  Does hash(block_string, proof) contain 6
+    Validates the Proof:  Does hash(block_string, proof) contain 3
     leading zeroes?  Return true if the proof is valid
     :param block_string: <string> The stringified block to use to
     check in combination with `proof`
@@ -27,7 +34,14 @@ def valid_proof(block_string, proof):
     correct number of leading zeroes.
     :return: True if the resulting hash is a valid proof, False otherwise
     """
+    # set a initial guess concatonate block string and proof then encode them
+    guess = f"{block_string}{proof}".encode()
+    # create a guess hash and hexdigest it
+    guess_hash = hashlib.sha256(guess).hexdigest()
     pass
+    # then return True if the guess hash has the valid number of leading zeros otherwise return False
+    return guess_hash[:3] == "000"
+
 
 
 if __name__ == '__main__':
