@@ -67,8 +67,6 @@ class Blockchain(object):
         # hash to a string of hexadecimal characters, which is
         # easier to work with and understand
         
-
-
         # Return the hashed block string in hexadecimal format
         return hashlib.sha256(block_string).hexdigest()
 
@@ -93,7 +91,7 @@ class Blockchain(object):
         guess = f"{block_string}{proof}".encode()
         # create a guess hash and hexdigest it
         guess_hash = hashlib.sha256(guess).hexdigest()
-        pass
+
         # then return True if the guess hash has the valid number of leading zeros otherwise return False
         return guess_hash[:6] == "000000"
 
@@ -121,22 +119,25 @@ def last_block():
 
 @app.route('/mine', methods=['POST'])
 def mine():
-    # * It should accept a POST
-    # * Use `data = request.get_json()` to pull the data out of the POST
+    # It should accept a POST 
+    # Use `data = request.get_json()` to pull the data out of the POST
         # after we know we have new proof, want to add a new block
         # want to recieve and validate what we get from the client
     data = request.get_json()
-    #     * Note that `request` and `requests` both exist in this project
-    # * Check that 'proof', and 'id' are present
-    #     * return a 400 error using `jsonify(response)` with a 'message
-    if 'proof' or 'id' not in data:
+    #     Note that `request` and `requests` both exist in this project
+    # Check that 'proof', and 'id' are present
+    #     return a 400 error using `jsonify(response)` with a 'message
+    if 'proof' not in data or 'id' not in data:
         response = {'message': 'missing proof and id'}
         return jsonify(response), 400
     
     # Run the proof of work algorithm to get the next proof
     # proof = blockchain.proof_of_work()
-
+    proof = data['proof']
+    miner_id = data['id'] 
    
+
+    blockchain.valid_proof(block_string, proof)
 
     # Forge the new Block by adding it to the chain with the proof
     previous_hash = blockchain.hash(blockchain.last_block)
