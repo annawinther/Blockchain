@@ -108,6 +108,12 @@ node_identifier = str(uuid4()).replace('-', '')
 # Instantiate the Blockchain
 blockchain = Blockchain()
 
+# add a new endpoint to the app called last block
+@app.route('/last_block', methods=['GET'])
+def last_block():
+    # need to return the last block of the chain
+    pass
+
 
 @app.route('/mine', methods=['GET'])
 def mine():
