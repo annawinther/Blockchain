@@ -107,7 +107,6 @@ class Blockchain(object):
         guess = f"{block_string}{proof}".encode()
         # create a guess hash and hexdigest it
         guess_hash = hashlib.sha256(guess).hexdigest()
-        pass
         # then return True if the guess hash has the valid number of leading zeros otherwise return False
         return guess_hash[:3] == "000"
 
