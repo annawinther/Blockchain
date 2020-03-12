@@ -126,11 +126,22 @@ def mine():
     data = request.get_json()
     #     Note that `request` and `requests` both exist in this project
     # Check that 'proof', and 'id' are present
-    #     return a 400 error using `jsonify(response)` with a 'message
+    #     return a 400 error using `jsonify(response)` with a 'message'
+    required = ['proof', 'id']
+
+    # if the values from data are not in required
+        # then send a json message to client of missing values, return 400 
     if 'proof' not in data or 'id' not in data:
         response = {'message': 'missing proof and id'}
         return jsonify(response), 400
     
+    # get the submitted proof from data
+
+    # determine is proof is valid
+        # build a response dictionary 
+        # return the response 
+    # otherwise
+        # send json message that proof was invalid and return 200
     # Run the proof of work algorithm to get the next proof
     # proof = blockchain.proof_of_work()
     proof = data['proof']
